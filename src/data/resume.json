@@ -1,0 +1,86 @@
+{
+  "personal_info": {
+    "name": "Priyanshu Choudhary",
+    "phone": "+91 7428563034",
+    "email": "priyanshuchaudhary1000@gmail.com",
+    "location": "India",
+    "socials": {
+        "linkedin": "https://www.linkedin.com/in/priyanshu-ch29/",
+        "github": "https://github.com/priyanshu-ch29"
+    },
+    "headline": "Full-Stack Developer building scalable web and mobile apps with React, Next.js, React Native, Node.js and TypeScript",
+    "summary": "Full-Stack Developer experienced in building scalable web and mobile applications with React.js, Next.js, React Native, Node.js, and TypeScript. Proficient in REST APIs, GraphQL, AWS SQS-based event-driven systems, SQL/NoSQL databases, Dockerized deployments, and CI/CD pipelines using GitHub Actions, with a strong focus on performance and reliability."
+  },
+  "work_experience": [
+    {
+      "company": "Zippee",
+      "location": "India",
+      "role": "Application Developer",
+      "start_date": "2026-02",
+      "end_date": "Present",
+      "highlights": [
+        "Led the migration of a production React Native rider app from REST to a typed GraphQL gateway, replacing 29 RTK Query modules with 71 typed Apollo Client v4 operations via GraphQL Codegen across 230+ files, eliminating 3,300 lines of hand-rolled REST plumbing",
+        "Architected the app's GraphQL networking layer as sole author: Apollo HttpLink chain, per-request auth link, and a refresh-then-logout error link backed by a single refreshToken mutation shared across GraphQL and legacy REST callers",
+        "Built the backend-driven rider onboarding funnel end-to-end: 11 screens (KYC, PAN/Aadhaar/DL/RC/insurance, employment, bank, nominee) with 9 React Hook Form + Yup validation hooks and a routing engine mapping 7 onboarding steps to 8 account states, making the server the source of truth for funnel position",
+        "Shipped in-app UPI/COD collection using Razorpay dynamic QR, implementing a 7-state payment hook with 3-second status polling, app-kill recovery, and idempotent payment reconciliation",
+        "Eliminated 28,000 lines of dead flow code across 108 files in a sequenced, verified refactor ending with a zero-dead-reference TypeScript pass",
+        "Diagnosed and fixed an Apollo cache-normalization bug causing riders to see the wrong delivery address and coordinates on manifest cards, resolved via a custom cache type policy",
+        "Authored the rider-gateway API contract (345-line integration guide + 160-line gap analysis) and drove 12 schema gaps to closure with the backend team, including address autofill, vendor search, and OCR document extraction"
+      ]
+    },
+    {
+      "company": "CareerCarve",
+      "location": "India",
+      "role": "Associate Software Engineer",
+      "start_date": "2024-08",
+      "end_date": "2026-02",
+      "highlights": [
+        "Led migration from Expo SDK 50 to SDK 53, resolving Android/iOS build blockers and stabilizing production releases",
+        "Built a scalable frontend profile management system used by 3,000+ users, reducing manual profile completion time by 40% by converting AI-parsed resume data into editable, structured profile sections with optimized state handling",
+        "Developed scalable Node.js RESTful APIs using Express.js and GraphQL supporting core user profile and application workflows",
+        "Designed and implemented auto scalable DynamoDB schemas, ensuring consistent profile initialization and reliable data access for 3,000+ authenticated users",
+        "Built event-driven backend systems using AWS SQS to enable asynchronous synchronization of user profile data from DynamoDB to analytics-focused downstream services",
+        "Monitored and reduced Firebase Crashlytics crash rate by 12%, addressing frequent Android navigation-related crashes",
+        "Owned end-to-end mobile delivery by implementing CI/CD pipelines with Expo EAS to automate builds and deployments to Google Play Internal Testing and Apple TestFlight, resolving 6+ Gradle and native dependency build issues"
+      ]
+    }
+  ],
+  "skills": {
+    "languages": ["JavaScript", "TypeScript", "SQL", "Python"],
+    "frontend": ["React.js", "Next.js", "React Native", "Redux", "Redux Toolkit", "TanStack Query", "Apollo Client", "HTML5", "CSS3", "Tailwind CSS", "MUI"],
+    "backend": ["Node.js", "Express.js", "RESTful APIs", "GraphQL", "GraphQL Codegen"],
+    "databases": ["MongoDB", "MySQL", "DynamoDB", "PostgreSQL"],
+    "cloud_deployment": ["AWS (SQS, DynamoDB, S3)", "Docker", "GitHub Actions", "Firebase App Distribution"],
+    "tools_platforms": ["Git", "Postman", "Firebase", "Easebuzz", "Socket.io", "SonarQube", "Razorpay"]
+  },
+  "projects": [
+    {
+      "name": "Imagify AI",
+      "date": "2025-10",
+      "tech": ["Node.js", "React.js", "Express.js", "MongoDB"],
+      "description": "Integrated AI-powered image generation using prompt-based inputs, enabling users to generate images seamlessly through an intuitive UI. Implemented password reset and secure authentication using JSON Web Tokens and bcrypt password hashing."
+    },
+    {
+      "name": "Swiggy-Inspired Food Ordering Platform",
+      "date": "2024-04",
+      "tech": ["React", "Redux", "Tailwind CSS", "Firebase"],
+      "description": "Built a scalable, component-driven frontend using React.js to replicate core food ordering workflows. Integrated external APIs to fetch and render dynamic restaurant and menu data with efficient state management."
+    }
+  ],
+  "education": [
+    {
+      "institution": "Vellore Institute of Technology",
+      "degree": "MCA",
+      "start_year": "2023",
+      "end_year": "2025",
+      "cgpa": 8.44
+    },
+    {
+      "institution": "University of Delhi",
+      "degree": "B.Sc (Hons) Computer Science",
+      "start_year": "2020",
+      "end_year": "2023",
+      "cgpa": 8.581
+    }
+  ]
+}
