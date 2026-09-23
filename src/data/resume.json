@@ -5,11 +5,14 @@
     "email": "priyanshuchaudhary1000@gmail.com",
     "location": "India",
     "socials": {
-        "linkedin": "https://www.linkedin.com/in/priyanshu-ch29/",
-        "github": "https://github.com/priyanshu-ch29"
+      "linkedin": "https://www.linkedin.com/in/priyanshu-ch29/",
+      "github": "https://github.com/priyanshu-ch29"
     },
     "headline": "Full-Stack Developer building scalable web and mobile apps with React, Next.js, React Native, Node.js and TypeScript",
-    "summary": "Full-Stack Developer experienced in building scalable web and mobile applications with React.js, Next.js, React Native, Node.js, and TypeScript. Proficient in REST APIs, GraphQL, AWS SQS-based event-driven systems, SQL/NoSQL databases, Dockerized deployments, and CI/CD pipelines using GitHub Actions, with a strong focus on performance and reliability."
+    "summary": "Full-Stack Developer experienced in building scalable web and mobile applications with React.js, Next.js, React Native, Node.js, and TypeScript. Proficient in REST APIs, GraphQL, AWS SQS-based event-driven systems, SQL/NoSQL databases, Dockerized deployments, and CI/CD pipelines using GitHub Actions, with a strong focus on performance and reliability.",
+    "role": "Application Developer @ Zippee",
+    "tagline": "Full-Stack Developer · React Native · GraphQL · Node.js · TypeScript",
+    "status": ""
   },
   "work_experience": [
     {
@@ -46,24 +49,132 @@
     }
   ],
   "skills": {
-    "languages": ["JavaScript", "TypeScript", "SQL", "Python"],
-    "frontend": ["React.js", "Next.js", "React Native", "Redux", "Redux Toolkit", "TanStack Query", "Apollo Client", "HTML5", "CSS3", "Tailwind CSS", "MUI"],
-    "backend": ["Node.js", "Express.js", "RESTful APIs", "GraphQL", "GraphQL Codegen"],
-    "databases": ["MongoDB", "MySQL", "DynamoDB", "PostgreSQL"],
-    "cloud_deployment": ["AWS (SQS, DynamoDB, S3)", "Docker", "GitHub Actions", "Firebase App Distribution"],
-    "tools_platforms": ["Git", "Postman", "Firebase", "Easebuzz", "Socket.io", "SonarQube", "Razorpay"]
+    "languages": [
+      "JavaScript",
+      "TypeScript",
+      "SQL",
+      "Python"
+    ],
+    "frontend": [
+      "React.js",
+      "Next.js",
+      "React Native",
+      "Redux",
+      "Redux Toolkit",
+      "TanStack Query",
+      "Apollo Client",
+      "HTML5",
+      "CSS3",
+      "Tailwind CSS",
+      "MUI"
+    ],
+    "backend": [
+      "Node.js",
+      "Express.js",
+      "RESTful APIs",
+      "GraphQL",
+      "GraphQL Codegen"
+    ],
+    "databases": [
+      "MongoDB",
+      "MySQL",
+      "DynamoDB",
+      "PostgreSQL"
+    ],
+    "cloud_deployment": [
+      "AWS (SQS, DynamoDB, S3)",
+      "Docker",
+      "GitHub Actions",
+      "Firebase App Distribution"
+    ],
+    "tools_platforms": [
+      "Git",
+      "Postman",
+      "Firebase",
+      "Easebuzz",
+      "Socket.io",
+      "SonarQube",
+      "Razorpay"
+    ]
+  },
+  "skill_usage": {
+    "TypeScript": [
+      "Zippee"
+    ],
+    "React Native": [
+      "Zippee",
+      "CareerCarve"
+    ],
+    "Apollo Client": [
+      "Zippee"
+    ],
+    "GraphQL": [
+      "Zippee",
+      "CareerCarve"
+    ],
+    "GraphQL Codegen": [
+      "Zippee"
+    ],
+    "Redux Toolkit": [
+      "Zippee"
+    ],
+    "Node.js": [
+      "CareerCarve"
+    ],
+    "Express.js": [
+      "CareerCarve"
+    ],
+    "RESTful APIs": [
+      "CareerCarve"
+    ],
+    "DynamoDB": [
+      "CareerCarve"
+    ],
+    "AWS (SQS, DynamoDB, S3)": [
+      "CareerCarve"
+    ],
+    "Firebase": [
+      "CareerCarve"
+    ],
+    "Razorpay": [
+      "Zippee"
+    ]
   },
   "projects": [
     {
       "name": "Imagify AI",
       "date": "2025-10",
-      "tech": ["Node.js", "React.js", "Express.js", "MongoDB"],
-      "description": "Integrated AI-powered image generation using prompt-based inputs, enabling users to generate images seamlessly through an intuitive UI. Implemented password reset and secure authentication using JSON Web Tokens and bcrypt password hashing."
+      "tech": [
+        "Node.js",
+        "React.js",
+        "Express.js",
+        "MongoDB"
+      ],
+      "description": "Integrated AI-powered image generation using prompt-based inputs, enabling users to generate images seamlessly through an intuitive UI. Implemented password reset and secure authentication using JSON Web Tokens and bcrypt password hashing.",
+      "live": "https://imagify-red-two.vercel.app",
+      "github": "https://github.com/priyanshu-ch29/imagify"
+    },
+    {
+      "name": "DevTinder",
+      "date": "2025",
+      "tech": [
+        "Node.js",
+        "Express.js",
+        "MongoDB",
+        "React.js"
+      ],
+      "description": "A matchmaking platform for developers. Express 5 + MongoDB (Mongoose) backend with JWT cookie-based authentication, bcrypt password hashing and request validation.",
+      "github": "https://github.com/priyanshu-ch29/DevTinder_BD"
     },
     {
       "name": "Swiggy-Inspired Food Ordering Platform",
       "date": "2024-04",
-      "tech": ["React", "Redux", "Tailwind CSS", "Firebase"],
+      "tech": [
+        "React",
+        "Redux",
+        "Tailwind CSS",
+        "Firebase"
+      ],
       "description": "Built a scalable, component-driven frontend using React.js to replicate core food ordering workflows. Integrated external APIs to fetch and render dynamic restaurant and menu data with efficient state management."
     }
   ],

@@ -6,13 +6,57 @@ import { Experience } from '../components/commands/Experience';
 import { About } from '../components/commands/About';
 import { Summary } from '../components/commands/Summary';
 import { MatrixEffect } from '../components/commands/MatrixEffect';
+import { Neofetch } from '../components/commands/Neofetch';
+import type { ReactNode } from 'react';
+import { CommandChip, NextSteps } from '../components/CommandChip';
 import resumeData from '../data/resume.json';
+import { RESUME_URL } from './terminal';
+import { THEME_NAMES, applyTheme, isThemeName } from './theme';
 
 // Commands offered by tab completion (hidden easter eggs are left out on purpose)
 export const COMMANDS = [
-  'about', 'cat', 'cd', 'clear', 'contact', 'experience', 'help', 'ls',
-  'matrix', 'open', 'projects', 'reboot', 'resume', 'skills', 'summary', 'whoami',
+  'about', 'cat', 'cd', 'clear', 'contact', 'experience', 'help', 'ls', 'matrix',
+  'neofetch', 'open', 'projects', 'reboot', 'resume', 'skills', 'summary', 'theme', 'whoami',
 ];
+
+// Fixed argument lists for tab completion
+export const ARG_OPTIONS: Record<string, string[]> = { theme: THEME_NAMES };
+
+const editDistance = (a: string, b: string): number => {
+  const row = Array.from({ length: b.length + 1 }, (_, i) => i);
+  for (let i = 1; i <= a.length; i++) {
+    let prev = row[0];
+    row[0] = i;
+    for (let j = 1; j <= b.length; j++) {
+      const temp = row[j];
+      row[j] = Math.min(row[j] + 1, row[j - 1] + 1, prev + (a[i - 1] === b[j - 1] ? 0 : 1));
+      prev = temp;
+    }
+  }
+  return row[b.length];
+};
+
+// Closest known command for typos like "experince", or null if nothing is close
+const suggestCommand = (input: string): string | null => {
+  let best: string | null = null;
+  let bestDistance = Infinity;
+  for (const command of COMMANDS) {
+    const distance = editDistance(input, command);
+    if (distance < bestDistance) {
+      best = command;
+      bestDistance = distance;
+    }
+  }
+  return bestDistance <= Math.max(1, Math.floor(input.length / 3)) ? best : null;
+};
+
+// Command output followed by clickable "what next" suggestions
+const withNext = (content: ReactNode, next: string[]) => (
+  <>
+    {content}
+    <NextSteps commands={next} />
+  </>
+);
 
 
 // Simple command processor
@@ -44,11 +88,15 @@ export const processCommand = (input: string) => {
                     <div><span className="text-primary font-bold w-24 inline-block">projects</span> <span className="text-white/60">My built works</span></div>
                     <div><span className="text-primary font-bold w-24 inline-block">summary</span> <span className="text-white/60">Resume view</span></div>
                     <div><span className="text-primary font-bold w-24 inline-block">contact</span> <span className="text-white/60">Get in touch</span></div>
+                    <div><span className="text-primary font-bold w-24 inline-block">resume</span> <span className="text-white/60">Open resume PDF</span></div>
+                    <div><span className="text-primary font-bold w-24 inline-block">neofetch</span> <span className="text-white/60">System info, but it's me</span></div>
+                    <div><span className="text-primary font-bold w-24 inline-block">theme [name]</span> <span className="text-white/60">{THEME_NAMES.join(' | ')}</span></div>
                     <div><span className="text-primary font-bold w-24 inline-block">matrix</span> <span className="text-white/60">Enter the Matrix</span></div>
                     <div><span className="text-primary font-bold w-24 inline-block">ls</span> <span className="text-white/60">List directory contents</span></div>
                     <div><span className="text-primary font-bold w-24 inline-block">cd [dir]</span> <span className="text-white/60">Change directory</span></div>
                     <div><span className="text-primary font-bold w-24 inline-block">cat [file]</span> <span className="text-white/60">View file content</span></div>
-                    <div><span className="text-primary font-bold w-24 inline-block">clear</span> <span className="text-white/60">Clear screen</span></div>
+                    <div><span className="text-primary font-bold w-24 inline-block">clear</span> <span className="text-white/60">Clear screen (Ctrl+L)</span></div>
+                    <div className="col-span-1 md:col-span-2 text-white/40 mt-2">Tab completes · ↑/↓ history · Ctrl+C cancels the line</div>
                 </div>
             )
         });
@@ -61,35 +109,50 @@ export const processCommand = (input: string) => {
     case 'whoami':
         addEntry({
             type: 'output',
-            content: 'guest'
+            content: `You're guest. I'm ${resumeData.personal_info.name}: ${resumeData.personal_info.headline}.`
         });
         break;
 
+    case 'neofetch':
+        addEntry({ type: 'output', content: withNext(<Neofetch />, ['experience', 'projects']) });
+        break;
+
+    case 'theme':
+        if (!args[0]) {
+            addEntry({ type: 'output', content: `Usage: theme <${THEME_NAMES.join('|')}>` });
+        } else if (isThemeName(args[0])) {
+            applyTheme(args[0]);
+            addEntry({ type: 'output', content: `Theme set to ${args[0]}.` });
+        } else {
+            addEntry({ type: 'output', content: `theme: unknown theme '${args[0]}'. Try: ${THEME_NAMES.join(', ')}` });
+        }
+        break;
+
     case 'about':
-        addEntry({ type: 'output', content: <About /> });
+        addEntry({ type: 'output', content: withNext(<About />, ['experience', 'projects', 'resume']) });
         break;
         
     case 'skills':
-        addEntry({ type: 'output', content: <Skills /> });
+        addEntry({ type: 'output', content: withNext(<Skills />, ['projects', 'contact']) });
         break;
         
     case 'projects':
-        addEntry({ type: 'output', content: <Projects /> });
+        addEntry({ type: 'output', content: withNext(<Projects />, ['skills', 'contact']) });
         break;
         
     case 'experience':
-        addEntry({ type: 'output', content: <Experience /> });
+        addEntry({ type: 'output', content: withNext(<Experience />, ['projects', 'skills']) });
         break;
 
     case 'summary':
-        addEntry({ type: 'output', content: <Summary /> });
+        addEntry({ type: 'output', content: withNext(<Summary />, ['resume', 'contact']) });
         break;
 
         
     case 'contact':
         addEntry({ 
             type: 'output', 
-            content: (
+            content: withNext(
                 <div className="text-white/90">
                     <p>You can reach me at:</p>
                     <ul className="list-disc pl-5 mt-2 space-y-1">
@@ -99,8 +162,9 @@ export const processCommand = (input: string) => {
                            <li key={platform} className="capitalize">{platform}: <a href={url as string} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">{url as string}</a></li>
                        ))}
                     </ul>
-                </div>
-            ) 
+                </div>,
+                ['resume', 'about']
+            )
         });
         break;
         
@@ -108,7 +172,7 @@ export const processCommand = (input: string) => {
     case 'open':
         // Check if arg is resume or resume.pdf
         if (!args[0] || args[0].includes('resume')) {
-             window.open('/PriyanshuResume.pdf', '_blank');
+             window.open(RESUME_URL, '_blank');
              addEntry({ type: 'output', content: 'Opening resume...' });
         } else {
              addEntry({ type: 'output', content: `open: ${args[0]}: not found` });
@@ -224,7 +288,18 @@ export const processCommand = (input: string) => {
         addEntry({ type: 'output', content: 'Why use text editors when you have VS Code? (Just kidding, but you can\'t open them here.)' });
         break;
 
-    default:
-        addEntry({ type: 'output', content: `${cmd}: command not found. Type 'help' for available commands.` });
+    default: {
+        const suggestion = suggestCommand(cmd.toLowerCase());
+        addEntry({
+            type: 'output',
+            content: suggestion ? (
+                <div className="flex flex-wrap items-center gap-2">
+                    <span>{cmd}: command not found. Did you mean</span>
+                    <CommandChip command={suggestion} />
+                    <span>?</span>
+                </div>
+            ) : `${cmd}: command not found. Type 'help' for available commands.`
+        });
+    }
   }
 };

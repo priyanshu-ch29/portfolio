@@ -1,5 +1,7 @@
 import React from 'react';
 import resumeData from '../../data/resume.json';
+import { highlightMetrics } from '../../utils/highlight';
+import { RESUME_URL } from '../../utils/terminal';
 
 export const Summary: React.FC = () => {
   return (
@@ -15,8 +17,11 @@ export const Summary: React.FC = () => {
           📱 {resumeData.personal_info.phone}
         </div>
         <div className="flex gap-4 mt-2 text-xs">
+          <a href={RESUME_URL} target="_blank" rel="noreferrer" className="text-primary hover:underline">
+            Resume (PDF)
+          </a>
           {Object.entries(resumeData.personal_info.socials || {}).map(([platform, url]) => (
-             <a key={platform} href={url as string} target="_blank" rel="noreferrer" className="text-blue-400 hover:underline capitalize">
+             <a key={platform} href={url as string} target="_blank" rel="noreferrer" className="text-primary hover:underline capitalize">
                {platform}
              </a>
           ))}
@@ -36,7 +41,7 @@ export const Summary: React.FC = () => {
               <div className="text-primary/80 text-sm mb-1">{job.company} — {job.location}</div>
               <ul className="list-disc pl-5 space-y-1 text-white/70 text-sm">
                 {job.highlights.map((highlight, hIdx) => (
-                  <li key={hIdx}>{highlight}</li>
+                  <li key={hIdx}>{highlightMetrics(highlight)}</li>
                 ))}
               </ul>
             </div>

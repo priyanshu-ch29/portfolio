@@ -6,17 +6,20 @@ import { CommandOutput } from './components/CommandOutput';
 import { useTerminalStore } from './store/useTerminalStore';
 import { processCommand } from './utils/commandRegistry';
 import { MatrixEffect } from './components/commands/MatrixEffect';
+import { Banner } from './components/Banner';
+import { prefersReducedMotion } from './utils/terminal';
+import resumeData from './data/resume.json';
 
-const INTRO_DURATION_MS = 7000;
+const INTRO_DURATION_MS = 4000;
 
 type IntroPhase = 'playing' | 'fading' | 'done';
 
 function App() {
   const history = useTerminalStore((state) => state.history);
   const addEntry = useTerminalStore((state) => state.addEntry);
-  const [introPhase, setIntroPhase] = useState<IntroPhase>('playing');
+  const [introPhase, setIntroPhase] = useState<IntroPhase>(() => (prefersReducedMotion() ? 'done' : 'playing'));
 
-  // Matrix intro: plays on landing, fades out after 5s (click or any key skips it)
+  // Matrix intro: plays on every landing (skipped for reduced-motion visitors), then fades out; click or any key skips it
   useEffect(() => {
     if (introPhase !== 'playing') return;
     const skip = () => setIntroPhase('fading');
@@ -33,27 +36,7 @@ function App() {
   useEffect(() => {
     // Initial banner (guarded: StrictMode runs effects twice in dev)
     if (useTerminalStore.getState().history.length > 0) return;
-    addEntry({
-      type: 'output',
-      content: (
-        <div className="mb-4 text-primary/80">
-          <pre className="text-[10px] md:text-sm leading-none font-bold">
-            {`
-  _____   ____  _____ _______ ______ ____  _      _____ ____  
- |  __ \\ / __ \\|  __ \\__   __|  ____/ __ \\| |    |_   _/ __ \\ 
- | |__) | |  | | |__) | | |  | |__ | |  | | |      | || |  | |
- |  ___/| |  | |  _  /  | |  |  __|| |  | | |      | || |  | |
- | |    | |__| | | \\ \\  | |  | |   | |__| | |____ _| || |__| |
- |_|     \\____/|_|  \\_\\ |_|  |_|    \\____/|______|_____\\____/ 
-`}
-          </pre>
-          <div className="mt-2 border-b border-primary/20 pb-2 mb-2">
-            Welcome to Portfolio Terminal v1.0.0
-          </div>
-          <div className="text-white/60">Type <span className="text-primary font-bold">help</span> to see available commands.</div>
-        </div>
-      )
-    });
+    addEntry({ type: 'output', content: <Banner /> });
   }, [addEntry]);
 
   return (
@@ -71,6 +54,8 @@ function App() {
       )}
       {introPhase !== 'done' && (
         <MatrixEffect
+          title={resumeData.personal_info.name.toUpperCase()}
+          subtitle={resumeData.personal_info.tagline}
           hint="Wake up, Neo... (press any key to skip)"
           className={`bg-black transition-opacity duration-700 ${introPhase === 'fading' ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
           onFadeEnd={introPhase === 'fading' ? () => setIntroPhase('done') : undefined}

@@ -1,13 +1,14 @@
 import React from 'react';
 import type { CommandEntry } from '../store/useTerminalStore';
 import { Typewriter } from './Typewriter';
+import { PROMPT_HOST } from '../utils/terminal';
 
 export const CommandOutput: React.FC<{ entry: CommandEntry }> = ({ entry }) => {
   if (entry.type === 'command') {
     return (
       <div className="flex items-center gap-2 mb-2">
-        <span className="text-white/50">guest@portfolio:{entry.cwd || '~'}$</span>
-        <span className="text-primary">{entry.content}</span>
+        <span className="text-white/50 shrink-0">{PROMPT_HOST}:{entry.cwd || '~'}$</span>
+        <span className="text-primary break-all">{entry.content}</span>
       </div>
     );
   }

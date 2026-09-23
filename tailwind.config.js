@@ -8,9 +8,11 @@ export default {
     theme: {
         extend: {
             colors: {
-                "primary": "#0df259",
-                "background-light": "#102216", // Force dark even on light mode fallback
-                "background-dark": "#102216",
+                // Theme colors are CSS variables (see src/index.css) so the `theme` command can swap them
+                "primary": "rgb(var(--color-primary) / <alpha-value>)",
+                "background-light": "rgb(var(--color-background) / <alpha-value>)", // Force dark even on light mode fallback
+                "background-dark": "rgb(var(--color-background) / <alpha-value>)",
+                "chrome": "rgb(var(--color-chrome) / <alpha-value>)",
                 "terminal-black": "#0c0c0c",
             },
             fontFamily: {

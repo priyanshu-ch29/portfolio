@@ -17,7 +17,13 @@ const commonPrefix = (words: string[]): string => {
 };
 
 // Bash-style completion: first word completes against commands, later words against the file system
-export const complete = (input: string, cwd: string, commands: string[]): CompletionResult => {
+// argOptions: fixed argument lists for commands that don't take paths (e.g. theme names)
+export const complete = (
+  input: string,
+  cwd: string,
+  commands: string[],
+  argOptions: Record<string, string[]> = {}
+): CompletionResult => {
   const tokens = input.split(' ');
   const current = tokens[tokens.length - 1];
   const isCommand = tokens.length === 1;
@@ -28,6 +34,8 @@ export const complete = (input: string, cwd: string, commands: string[]): Comple
 
   if (isCommand) {
     candidates = commands;
+  } else if (argOptions[tokens[0]]) {
+    candidates = argOptions[tokens[0]];
   } else {
     // Split "projects/im" into the directory to list ("projects/") and the prefix to match ("im")
     const slash = current.lastIndexOf('/');
